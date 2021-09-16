@@ -82,6 +82,7 @@
         let studentList = document.querySelector('#student-list');
         studentList.appendChild(newLi);
 
+        // add to our total student count.
         displayStudentCount.innerHTML = ++totalStudents;
 
         newLi.addEventListener('click', function() {
@@ -89,18 +90,16 @@
         })
     })
 
-    // remove all list elements.
+    // remove all selected list elements, and update total student count.
     let removeButton = document.querySelector('#remove-selected-students');
     removeButton.addEventListener('click', function() {
-        let deleteElements = document.querySelectorAll('li');
+        let deleteElements = document.querySelectorAll('.selected');
             deleteElements.forEach(function(element) {
                 element.remove();
-
-                // reset the total student count to 0.
-                totalStudents = 0;
-                displayStudentCount.innerHTML = totalStudents;
+                displayStudentCount.innerHTML = --totalStudents;
             })
     })
+
 </script>
 
 </body>
