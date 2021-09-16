@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Club Membership</title>
+
+  <style>
+      
+      .selected {
+        text-decoration: line-through;
+        font-style: italic;
+        color: gray;
+      }
+
+      input {
+          width: 100%;
+          padding: 5px;
+          margin: 5px 5px 5px 0px;
+          box-sizing: border-box;
+      }
+
+  </style>
+
+</head>
+<body>
+
+    <h1>Student Club Roster</h1>
+
+    <h2>Add Students</h2>
+
+    <label for="student-name">Student Name</label><input id="student-name" name="student-name">
+    <br>
+    <label for="student-id">Student ID</label><input id="student-id" name="student-id">
+    <br>
+    <label for="student-gpa">Student GPA</label><input id="student-gpa" name="student-gpa" type="number">
+    <br>
+    <button id="add-student">Add Student</button>    
+
+    <h2>Student List</h2>
+
+    <p>There are 
+        <span id="student-count">
+        </span> 
+    student(s) in the club.</p>
+    
+    <ul id="student-list">
+    </ul>
+
+    <button id="remove-selected-students">Remove selected students</button>
+
+<script>
+    let totalStudents = 0;
+
+    let displayStudentCount = document.querySelector('#student-count');
+    displayStudentCount.innerHTML = '0';
+
+    // add students to the list.
+    let addStudentButton = document.querySelector('#add-student');
+    addStudentButton.addEventListener('click', function() {
+        let studentName = document.querySelector('#student-name').value;
+        if (studentName == '') {
+            alert('Please enter a name!');
+            return;
+        }
+
+        let studentId = document.querySelector('#student-id').value;
+        if (studentId == '') {
+            alert('Please enter a Student ID!');
+            return;
+        }
+
+        let studentGpa = document.querySelector('#student-gpa').value;
+        if (studentGpa == '' || studentGpa < 1 || studentGpa > 4) {
+            alert('Please enter a valid GPA!');
+            return;
+        }
+
+        // create a new li element, to be added to the ul.
+        let newLi = document.createElement('li');
+        newLi.innerHTML = `Student Name = ${studentName}, Student ID: ${studentId}, Student GPA: ${studentGpa}`
+
+        // add the li to the ul.
+        let studentList = document.querySelector('#student-list');
+        studentList.appendChild(newLi);
+
+        displayStudentCount.innerHTML = ++totalStudents;
+
+        newLi.addEventListener('click', function() {
+            newLi.classList.toggle('selected');
+        })
+    })
+
+    // remove all list elements.
+    let removeButton = document.querySelector('#remove-selected-students');
+    removeButton.addEventListener('click', function() {
+        let deleteElements = document.querySelectorAll('li');
+            deleteElements.forEach(function(element) {
+                element.remove();
+
+                // reset the total student count to 0.
+                totalStudents = 0;
+                displayStudentCount.innerHTML = totalStudents;
+            })
+    })
+</script>
+
+</body>
+</html>

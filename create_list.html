@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>Please enter some text in the list!</p>
+    <input type="text" id="text-input">
+
+    <button id="new-item">Add to list</button>
+
+    <!-- empty list for later use -->
+    <ul id="list-of-text">
+    </ul>
+
+    <button id="clear">Clear list</button>
+
+<script>
+    let textInput = document.querySelector('#text-input');
+    let newItemButton = document.querySelector('#new-item');
+    let clearItemButton = document.querySelector('#clear');
+    let listItem = document.querySelector('#list-of-text');
+
+    // used for validation
+    let elementsInList = 0;
+
+    // only 10 elements can be added to the list
+    let maxElements = 10;
+
+    // if the user presses 'enter', process as normal
+    document.addEventListener('keyup', function() {
+        if (event.keyCode == 13) {
+            newItemButton.click();
+        }
+    })
+
+    newItemButton.addEventListener('click', function() {
+
+        if (elementsInList >= maxElements) {
+            alert('no more elements can be added.');
+            return;
+        }
+
+        // retrieve value from the input field.
+        let newText = textInput.value;
+
+        // if nothing is entered, ignore.
+        if (newText.length == 0) {
+            return;
+        }
+
+        // only accept input that is between 1 and 50 characters.
+        if (newText.length > 1 && newText.length > 50) {
+            alert('The entered text is too long! Please try again.')
+            return;
+        }
+
+        // create new li element as a child of the parent ul element.
+        let newListItem = document.createElement('li');
+
+        // update our li to match the input value.
+        newListItem.innerHTML = newText;
+
+        // add our li to the DOM.
+        listItem.appendChild(newListItem);
+
+        // clear the textbox.
+        textInput.value = '';
+
+        elementsInList++;
+
+    })
+
+    clearItemButton.addEventListener('click', function() {
+        listItem.innerHTML = '';
+        elementsInList = 0;
+    })
+
+
+</script>
+
+</body>
+</html>
